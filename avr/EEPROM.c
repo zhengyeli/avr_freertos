@@ -14,6 +14,13 @@ void RTEEPROMwrite(int location, unsigned char databyte)
 	EEAR = 0;
 }
 
+void EEPROMwriteString(int location, unsigned char *data, int len)
+{
+	for (int i = 0 ; i < len ; i++)
+	{
+		RTEEPROMwrite(location + i, *(data+1));
+	}
+}
 
 
 // function to read from the EEPROM
@@ -29,4 +36,10 @@ unsigned char RTEEPROMread(int location)
 }
 
 
-
+void EEPROMreadString(int location, unsigned char *data, int len)
+{
+	for (int i = 0 ; i < len ; i++)
+	{
+		*(data+1) = RTEEPROMread(location + i);
+	}
+}

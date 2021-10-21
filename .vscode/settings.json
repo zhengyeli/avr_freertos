@@ -2,6 +2,8 @@
     "files.associations": {
         "EEPROM.C": "cpp",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "lfs.h": "c",
+        "STDIO.H": "cpp"
     }
 }
