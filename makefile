@@ -32,4 +32,4 @@ clean:
 	@rm -f *.hex *.o $(PATH_AVR)/*.o  $(PATH_FREERTOS)/*.o $(PATH_LFS)/*.o
 
 program:
-	@sudo avrdude -p m16 -c avrisp -P COM4 -e -U flash:w:main.hex
+	@sudo avrdude -p m16 -c usbasp -e -F -U flash:w:main.hex

@@ -71,7 +71,13 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil			1
 #define INCLUDE_vTaskDelay				1
 
+// soft timer
+#define configUSE_TIMERS                 1
+#define configTIMER_TASK_PRIORITY        10
+#define configTIMER_QUEUE_LENGTH         256
+#define configTIMER_TASK_STACK_DEPTH     256
 
-//#define portUSE_TIMER0                  1
+#define configSUPPORT_DYNAMIC_ALLOCATION 1
+#define portUSE_TIMER0                  1
 
 #endif /* FREERTOS_CONFIG_H */
