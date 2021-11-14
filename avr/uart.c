@@ -10,10 +10,10 @@ void uart0_init(void)
 {
  UCSRB = 0x00; //disable while setting baud rate
  UCSRA = 0x00;
- UCSRC = BIT(URSEL) | 0x07;
- UBRRL = 0x08; //set baud rate lo
+ UCSRC = BIT(URSEL) | 0x06;
+ UBRRL = 0x03; //set baud rate lo
  UBRRH = 0x00; //set baud rate hi
- UCSRB = 0xF8;
+ UCSRB = 0x98;
 }
 
 void uart0_port_init(void)
@@ -25,40 +25,43 @@ void uart0_port_init(void)
   PORTD |= 0X01;
 }
 
-#pragma interrupt_handler uart0_rx_isr:iv_USART0_RXC
-void uart0_rx_isr(void)
+//#pragma interrupt_handler uart0_rx_isr:iv_USART0_RXC
+ISR(_VECTOR(11))
 {
  //uart has received a character in UDR
- /* µÈ´ý½ÓÊÕÊý¾Ý */
+  DDRA ^= 0XA0;
+ PORTA ^= 0XA0;
  while ( !(UCSRA & (1<<RXC)) );
- /* ´Ó»º³åÆ÷ÖÐ»ñÈ¡²¢·µ»ØÊý¾Ý */
  index =  UDR;
- usart_transmit_str(index);
+ DDRA ^= 0XA0;
+ PORTA ^= 0XA0;
  //send back
- 
 }
 
-#pragma interrupt_handler uart0_udre_isr:iv_USART0_UDRE
-void uart0_udre_isr(void)
-{
- //character transferred to shift register so UDR is now empty
-}
-
-#pragma interrupt_handler uart0_tx_isr:iv_USART0_TXC
-void uart0_tx_isr(void)
+//#pragma interrupt_handler uart0_tx_isr:iv_USART0_TXC
+// UART IS FREE
+ISR(_VECTOR(15))
 {
  //character has been transmitted
- digital_show_one_num(4, 5);
+  DDRA = 0X40;
+ PORTA = 0X40;
 }
 
+// UART IS SEND
+ISR(_VECTOR(13))
+{
+ //character has been transmitted
+  DDRA = 0X80;
+ PORTA = 0X80;
+}
 
-void usart_transmit(unsigned char data) /*·¢ËÍÊý¾Ý*/
+void usart_transmit(unsigned char data) /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 {
  while(!(UCSRA&(1<<UDRE)));
  UDR = data;
 }
 
-void usart_transmit_str(char *data) /*·¢ËÍ×Ö·û´®Êý¾Ý*/
+void usart_transmit_str(char *data) /*ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 {
  while(*data)
  {

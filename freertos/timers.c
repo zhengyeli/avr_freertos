@@ -263,13 +263,14 @@
                     }
                 }
             #else /* if ( configSUPPORT_STATIC_ALLOCATION == 1 ) */
-                {
+                {usart_transmit_str("22222222222222");
                     xReturn = xTaskCreate( prvTimerTask,
                                            configTIMER_SERVICE_TASK_NAME,
                                            configTIMER_TASK_STACK_DEPTH,
                                            NULL,
                                            ( ( UBaseType_t ) configTIMER_TASK_PRIORITY ) | portPRIVILEGE_BIT,
                                            &xTimerTaskHandle );
+                                           usart_transmit_str("33333333333333");
                 }
             #endif /* configSUPPORT_STATIC_ALLOCATION */
         }

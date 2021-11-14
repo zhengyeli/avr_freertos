@@ -45,13 +45,12 @@
 #define configUSE_PREEMPTION		1
 #define configUSE_IDLE_HOOK			0
 #define configUSE_TICK_HOOK			0
-#define configCPU_CLOCK_HZ			( ( unsigned long ) 16000000 )
+#define configCPU_CLOCK_HZ			( ( unsigned long ) 8000000 )
 #define configTICK_RATE_HZ			( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES		( 4 )
-#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 85 )
-#define configTOTAL_HEAP_SIZE		( (size_t ) ( 1500 ) )
+#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 50 )
+#define configTOTAL_HEAP_SIZE		( (size_t ) ( 150 ) )
 #define configMAX_TASK_NAME_LEN		( 8 )
-#define configUSE_TRACE_FACILITY	0
 #define configUSE_16_BIT_TICKS		1
 #define configIDLE_SHOULD_YIELD		1
 #define configQUEUE_REGISTRY_SIZE	0
@@ -72,12 +71,20 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelay				1
 
 // soft timer
+/*
 #define configUSE_TIMERS                 1
-#define configTIMER_TASK_PRIORITY        10
-#define configTIMER_QUEUE_LENGTH         256
-#define configTIMER_TASK_STACK_DEPTH     256
-
+#define configTIMER_TASK_PRIORITY        4
+#define configTIMER_QUEUE_LENGTH         50
+#define configTIMER_TASK_STACK_DEPTH     50
+*/
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
-#define portUSE_TIMER0                  1
+#define portUSE_TIMER0                  
+#define MULTITHREAD_ENABLED
+#define configUSE_MUTEXES                1 //使用互斥信号量
+
+
+// 打印任务列表使能
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+#define configUSE_TRACE_FACILITY             1
 
 #endif /* FREERTOS_CONFIG_H */

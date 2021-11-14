@@ -8,7 +8,7 @@ void key_init()
    PORTC = 0x0F;
 }
 
-void key_scan()     //¾ØÕó¼üÅÌÉ¨Ãè
+void key_scan()     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¨ï¿½ï¿½
 {
    if (PINC != 0x0F)
    {
@@ -32,12 +32,12 @@ void key_scan()     //¾ØÕó¼üÅÌÉ¨Ãè
    }
 }
 
-void key_num(unsigned char key) //¸ù¾ÝÊÕµ½µÄÐÎ²Î£¬Ñ°ÕÒ¶ÔÓ¦µÄÊý×Ö
+void key_num(unsigned char key) //ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½Î²Î£ï¿½Ñ°ï¿½Ò¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
- switch (key)           //ÅÐ¶Ï
+ switch (key)           //ï¿½Ð¶ï¿½
  {
   case 0xEE: digital_show_one_num(0,0);ENABLE_DIGITAL = 1;break; //show digital
-  case 0xdE: digital_show_one_num(0,1);ENABLE_DIGITAL = 0;break;
+  case 0xdE: digital_show_one_num(0,1);ENABLE_DIGITAL = 1;break;
   case 0xbE: digital_show_one_num(0,2);break;
   case 0x7E: digital_show_one_num(0,3);break;
   

@@ -1,16 +1,20 @@
 #include "app.h"
 
-#pragma interrupt_handler int0_isr:iv_INT0
-void int0_isr(void)
+
+void int_port_init(void)
 {
- //external interupt on INT0	   
- //printf("FSDFGS\n");
-usart_transmit_str("ferdtgeryreg");
+    DDRD &= ~0X0C;
+    PORTD |= 0X0C;
 }
 
-#pragma interrupt_handler int1_isr:iv_INT1
-void int1_isr(void)
+//#pragma interrupt_handler int0_isr:iv_INT0
+ISR(_VECTOR(1))
 {
- //external interupt on INT1
- digital_showdata(7, 0xff);
+ usart_transmit_str("11111111111111");
+}
+
+//#pragma interrupt_handler int1_isr:iv_INT1
+ISR(_VECTOR(2))
+{
+ usart_transmit_str("22222222222222");
 }

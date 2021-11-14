@@ -1,7 +1,9 @@
 #ifndef __STDIO_H
 #define __STDIO_H
-#include <stdarg.h>
-#include <_const.h>
+//#include <stdarg.h>
+//#include <_const.h>
+#include "STDARG.H"
+#include "_const.h"
 
 #if defined(_AVR) || defined(_HC12)
 /* device specific functions map to special name forms so the linker
@@ -13,7 +15,6 @@
 #if defined(_HC12)
 #pragma nonpaged_function putchar getchar
 #endif
-
 int getchar(void);
 int putchar(char);
 char *gets(char *);

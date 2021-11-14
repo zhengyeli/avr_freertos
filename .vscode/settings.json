@@ -4,6 +4,21 @@
         "stdio.h": "c",
         "stdlib.h": "c",
         "lfs.h": "c",
-        "STDIO.H": "cpp"
+        "STDIO.H": "cpp",
+        "app.h": "c",
+        "macros.h": "c",
+        "avrdef.h": "c",
+        "iom16v.h": "c",
+        "iom16a.h": "c",
+        "iom16.h": "c",
+        "hal_os.h": "c",
+        "freertos.h": "c",
+        "freertosconfig.h": "c",
+        "test.C": "cpp",
+        "stdint.h": "c",
+        "stddef.h": "c",
+        "STDDEF.H": "cpp",
+        "STDARG.H": "cpp",
+        "STDLIB.H": "cpp"
     }
 }

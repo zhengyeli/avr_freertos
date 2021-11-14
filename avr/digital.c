@@ -8,11 +8,11 @@ int shownum[8]   = {1,2,3,4,5,6,7,8};
 				   
 void digital_port_init()
 {
- 	 DDRA |= 0X07;
-	 PORTA &= ~0X07;
+ 	DDRA |= 0X07;
+	PORTA &= ~0X07;
 	 
-	 DDRB = 0XFF;
-	 PORTB = 0Xff;
+	DDRB = 0XFF;
+	PORTB = 0Xff;
 }
 
 void digital_show_one_num(unsigned char index, unsigned char num)

@@ -6,10 +6,10 @@ int read_adc = 0;
 
 void adc_init(void)
 {
- ADCSR = 0x00; //disable adc
+ ADCSRA = 0x00; //disable adc
  ADMUX = 0x00; //select adc input 0
  ACSR  = 0x00;
- ADCSR = 0x89;
+ ADCSRA = 0x89;
 }
 
 #pragma interrupt_handler adc_isr:iv_ADC
@@ -23,10 +23,10 @@ void adc_isr(void)
 
 int start_adc(void)
 {
-     ADCSRA|=(1<<ADSC);           //ADC¿ªÊ¼×ª»»
-	 while(!(ADCSRA&(1<<ADIF)));   //µÈ´ýADC×ª»»½áÊø
-	 read_adc=ADC * 1000;                //»ñÈ¡ADCÖµ                         
-	 ADCSRA|=(1<<ADIF);           //Çå³ýADC±êÖ¾Î»
+     ADCSRA|=(1<<ADSC);           //ADCï¿½ï¿½Ê¼×ªï¿½ï¿½
+	 while(!(ADCSRA&(1<<ADIF)));   //ï¿½È´ï¿½ADC×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 read_adc=ADC * 1000;                //ï¿½ï¿½È¡ADCÖµ                         
+	 ADCSRA|=(1<<ADIF);           //ï¿½ï¿½ï¿½ADCï¿½ï¿½Ö¾Î»
 	 
 	 return read_adc;    
 }

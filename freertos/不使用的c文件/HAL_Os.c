@@ -9,19 +9,17 @@
 
 #include "timers.h"
 
-enum
-{
-    QCLOUD_RET_SUCCESS = 0,
-    QCLOUD_ERR_INVAL = 1,
-    QCLOUD_ERR_FAILURE = 2,
-};
-
 // TODO platform dependant
 void HAL_SleepMs( unsigned int ms)
 {
     TickType_t ticks = ms / portTICK_PERIOD_MS;
     vTaskDelay(ticks ? ticks : 1); /* Minimum delay = 1 tick */
     return;
+}
+
+int HAL_RandomBytes(void *dst, unsigned int size)
+{
+    //return rtw_get_random_bytes(dst, size);
 }
 
 int HAL_Snprintf(char *str, const int len, const char *fmt, ...)
@@ -34,6 +32,11 @@ int HAL_Snprintf(char *str, const int len, const char *fmt, ...)
     return rc;
 }
 
+int HAL_Vsnprintf(char *str,const int len, const char *format, va_list ap)
+{
+    return vsnprintf(str, len, format, ap);
+}
+
 void *HAL_Malloc(unsigned int size)
 {
     return pvPortMalloc(size);
@@ -44,7 +47,7 @@ void HAL_Free(void *ptr)
     if (ptr)
         vPortFree(ptr);
 }
-/*
+
 unsigned int HAL_Get_Free_Heap_Size()
 {
     return xPortGetFreeHeapSize();
@@ -78,7 +81,22 @@ void HAL_Get_Task_List()
 #endif
 }
 
-*/
+void HAL_Get_Task_time_state()
+{
+#ifdef DEBUG_VERSION
+    char *buffer = NULL;
+    buffer = HAL_Malloc(512);
+    vTaskGetRunTimeStats(buffer);
+    HAL_Printf("\r\n任务名       运行计数         使用率\r\n");
+    HAL_Printf("\r\n%s\r\n", buffer);
+    HAL_Free(buffer);
+#else
+    HAL_Printf("Closed In Release Version ");
+#endif
+}
+
+
+
 void *HAL_MutexCreate(void)
 {
 #ifdef MULTITHREAD_ENABLED
@@ -187,14 +205,14 @@ int HAL_ThreadCreate(ThreadParams *params)
         return QCLOUD_ERR_INVAL;
     if (params->thread_name == NULL)
     {
-       // HAL_Printf("thread name is required for FreeRTOS platform!\n");
+        HAL_Printf("thread name is required for FreeRTOS platform!\n");
         return QCLOUD_ERR_INVAL;
     }
     int ret = xTaskCreate(params->thread_func, params->thread_name, params->stack_size, (void *)params->user_arg,
                           params->priority, (void *)&params->thread_id);
     if (ret != pdPASS)
     {
-        //HAL_Printf("%s: xTaskCreate failed: %d\n", __FUNCTION__, ret);
+        HAL_Printf("%s: xTaskCreate failed: %d\n", __FUNCTION__, ret);
         return QCLOUD_ERR_FAILURE;
     }
     return QCLOUD_RET_SUCCESS;
@@ -228,7 +246,7 @@ int HAL_QueuePush(void *queue, void *item)
 {
     if (uxQueueSpacesAvailable((QueueHandle_t)queue) <= 0)
     {
-        //HAL_Printf("push queue: %d wait: %d free :%d\r\n", uxQueueSpacesAvailable((QueueHandle_t)queue), uxQueueMessagesWaiting((QueueHandle_t)queue), HAL_Get_Free_Heap_Size());
+        HAL_Printf("push queue: %d wait: %d free :%d\r\n", uxQueueSpacesAvailable((QueueHandle_t)queue), uxQueueMessagesWaiting((QueueHandle_t)queue), HAL_Get_Free_Heap_Size());
         return -1;
     }
 
@@ -276,7 +294,7 @@ int HAL_SemaphoreWait(void *sem, unsigned int timeout_ms)
 {
     //return osSemaphoreWait((osSemaphoreId)sem, timeout_ms);
 }
-/*
+
 unsigned int HAL_GetTickCount()
 {
     return xTaskGetTickCount();
@@ -286,8 +304,7 @@ unsigned int HAL_GetTickCountFromISR()
 {
     return xTaskGetTickCountFromISR();
 }
-*/
-#if configUSE_TIMERS == 1
+
 
 void *HAL_TimerInit(ThreadRunFunc func, void *args, bool repeat)
 {
@@ -320,4 +337,3 @@ void *HAL_TimerGetArgs(void *ptimer)
 }
 
 
-#endif
