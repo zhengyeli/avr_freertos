@@ -14,12 +14,16 @@
 #define  uint  unsigned int
 #define  uint8 unsigned char
 #define  uint16  unsigned int
-#define  use_freertos
+#define  use_freertos 
+#define  use_heap5 1
 
 extern int valid_num;
 extern int shownum[]; 
 extern char ENABLE_DIGITAL;
-
+  //printf("%d", temp);
+  //num = start_adc();
+  //RTEEPROMwrite(0X01,1);
+//num = RTEEPROMread(0x01);
 void EEPROMwriteString(int location, unsigned char *data, int len);
 void EEPROMreadString(int location, unsigned char *data, int len);
 #endif

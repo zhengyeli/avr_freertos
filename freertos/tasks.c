@@ -788,9 +788,9 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
                 {
                     pxNewTCB = NULL;
                 }       
-            usart_transmit_str("----------------------------------\n");
-            printf("task[%s] malloc\n", pcName);                
-            printf("first xWantedSize[%d] result:[%d]\n\n", (usStackDepth * sizeof( StackType_t )),  (pxStack != NULL ? 1 : 0));      
+            //usart_transmit_str("----------------------------------\n");
+            //printf("task[%s] malloc\n", pcName);                
+            //printf("first xWantedSize[%d] result:[%d]\n\n", (usStackDepth * sizeof( StackType_t )),  (pxStack != NULL ? 1 : 0));      
             }
         #endif /* portSTACK_GROWTH */
 
@@ -812,9 +812,9 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
         {
             xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
         }
-            printf("second xWantedSize[%d] result:[%d]\n\n", sizeof( TCB_t ), (pxNewTCB != NULL ? 1 : 0));
-            printf("create is [%d]\n\n", xReturn);
-            usart_transmit_str("----------------------------------\n");
+            //printf("second xWantedSize[%d] result:[%d]\n\n", sizeof( TCB_t ), (pxNewTCB != NULL ? 1 : 0));
+            //printf("create is [%d]\n\n", xReturn);
+            //usart_transmit_str("----------------------------------\n");
         return xReturn;
     }
 
@@ -3441,7 +3441,7 @@ void vTaskMissedYield( void )
  */
 static portTASK_FUNCTION( prvIdleTask, pvParameters )
 {
-    usart_transmit_str("idle\n");
+    //usart_transmit_str("idle\n");
     /* Stop warnings. */
     ( void ) pvParameters;
     /** THIS IS THE RTOS IDLE TASK - WHICH IS CREATED AUTOMATICALLY WHEN THE

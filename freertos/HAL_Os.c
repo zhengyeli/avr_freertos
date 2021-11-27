@@ -9,6 +9,8 @@
 
 #include "timers.h"
 
+//#include use_queue_c
+
 // TODO platform dependant
 void HAL_SleepMs( unsigned int ms)
 {
@@ -37,7 +39,7 @@ void HAL_Free(void *ptr)
     if (ptr)
         vPortFree(ptr);
 }
-/*
+
 unsigned int HAL_Get_Free_Heap_Size()
 {
     return xPortGetFreeHeapSize();
@@ -57,21 +59,15 @@ void HAL_Get_Task_info(char *buffer)
 }
 #endif
 
-void HAL_Get_Task_List()
+void HAL_Get_Task_List(uint8_t * buffer)
 {
-#ifdef DEBUG_VERSION
-    char *buffer = NULL;
-    buffer = HAL_Malloc(512);
-    vTaskList((char *) buffer);
-    HAL_Printf("任务名      任务状态 优先级   剩余栈 任务序号\r\n");
-    HAL_Printf("\r\n%s\r\n", buffer);
-    HAL_Free(buffer);
-#else
-    HAL_Printf("Closed In Release Version ");
-#endif
+    vTaskList((uint8_t *) buffer);
+    HAL_Printf("\n\r任务名  状态 优先级 剩余栈 序号");
+    HAL_Printf("\n%s", buffer);
+    vPortFree(buffer);
+    HAL_Printf("Free_Heap:%d,Min_Ever_Free_Heap:%d\r\n", HAL_Get_Free_Heap_Size(), HAL_Get_Min_Ever_Free_Heap_Size());
 }
-
-*/
+/*
 void *HAL_MutexCreate(void)
 {
 #ifdef MULTITHREAD_ENABLED
@@ -164,7 +160,7 @@ void HAL_MutexUnlock(void *mutex)
     return;
 #endif
 }
-
+*/
 #ifdef MULTITHREAD_ENABLED
 
 //freertos task delete
@@ -199,6 +195,8 @@ void  HAL_Thread_Scheduler()
 }
 #endif
 
+
+#ifdef use_queue_c
 /*Queue Init*/
 void *HAL_QueueInit(unsigned int item_size, unsigned int length)
 {
@@ -269,6 +267,9 @@ int HAL_SemaphoreWait(void *sem, unsigned int timeout_ms)
 {
     //return osSemaphoreWait((osSemaphoreId)sem, timeout_ms);
 }
+
+#endif
+
 /*
 unsigned int HAL_GetTickCount()
 {
@@ -278,8 +279,10 @@ unsigned int HAL_GetTickCount()
 unsigned int HAL_GetTickCountFromISR()
 {
     return xTaskGetTickCountFromISR();
-}
-*/
+}*/
+
+
+
 #if configUSE_TIMERS == 1
 
 void *HAL_TimerInit(ThreadRunFunc func, void *args, bool repeat)
