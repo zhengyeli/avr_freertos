@@ -59,7 +59,6 @@
 void * pvPortMalloc( size_t xWantedSize )
 {
     void * pvReturn;
-
     vTaskSuspendAll();
     {
         pvReturn = malloc( xWantedSize );
@@ -76,7 +75,15 @@ void * pvPortMalloc( size_t xWantedSize )
             }
         }
     #endif
-
+    if (pvReturn == NULL)
+    {
+          //printf("pvPortMalloc malloc false\n");
+    }
+    else
+    {
+          //printf("pvPortMalloc malloc successful\n");     
+    }
+    //printf("-----------------------------------\n\n");
     return pvReturn;
 }
 /*-----------------------------------------------------------*/

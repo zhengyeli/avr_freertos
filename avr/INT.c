@@ -10,11 +10,11 @@ void int_port_init(void)
 //#pragma interrupt_handler int0_isr:iv_INT0
 ISR(_VECTOR(1))
 {
- usart_transmit_str("11111111111111");
+ //usart_transmit_str("11111111111111");
 }
 
 //#pragma interrupt_handler int1_isr:iv_INT1
 ISR(_VECTOR(2))
 {
- usart_transmit_str("22222222222222");
+ //usart_transmit_str("22222222222222");
 }

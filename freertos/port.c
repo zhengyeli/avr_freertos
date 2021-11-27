@@ -50,21 +50,20 @@
 #elif defined( portUSE_TIMER0 )
 
 /* Hardware constants for Timer0. */
-/*
+
     #warning "Timer2 used for scheduler."
-    #define portSCHEDULER_ISR           TIMER2_OVF_vect
-    #define portCLEAR_COUNTER_ON_MATCH  ( (uint8_t) 0 )
-    #define portPRESCALE_1024           ( (uint8_t) (_BV(CS22)|_BV(CS21)|_BV(CS20)) )
+    #define portSCHEDULER_ISR           TIMER2_COMP_vect
+    #define portCLEAR_COUNTER_ON_MATCH  ( (uint8_t) _BV(WGM21) )
+    #define portPRESCALE_1024           ( (uint8_t) (_BV(CS22)|_BV(CS20)) )
     #define portCLOCK_PRESCALER         ( (uint32_t) 1024 )
     #define portCOMPARE_MATCH_A_INTERRUPT_ENABLE    ( (uint8_t) (_BV(OCIE2)|_BV(TOIE2)))
     #define portOCRL                    OCR2
-    #define portTCCR2                   TCCR2
-    //#define portTCCRa                   TCCR0
+    #define portTCCR0                   TCCR2
     //#define portTCCRb                   TCCR0B
     #define portTIMSK                   TIMSK
     #define portTIFR                    TIFR
-*/
 
+/*
     #warning "Timer0 used for scheduler."
     #define portSCHEDULER_ISR           TIMER0_COMP_vect
     #define portCLEAR_COUNTER_ON_MATCH  ( (uint8_t) _BV(WGM01) )
@@ -76,7 +75,7 @@
     //#define portTCCRb                   TCCR0B
     #define portTIMSK                   TIMSK
     #define portTIFR                    TIFR
-
+*/
 #endif
 
 /*-----------------------------------------------------------*/
@@ -621,7 +620,7 @@ BaseType_t xPortStartScheduler( void )
 {
     /* Setup the relevant timer hardware to generate the tick. */
     prvSetupTimerInterrupt();
-
+        //printf("xPortStartScheduler in\n");
     /* Restore the context of the first task that is going to run. */
     portRESTORE_CONTEXT();
 

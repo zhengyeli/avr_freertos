@@ -9,17 +9,10 @@
 
 #include "timers.h"
 
-enum
-{
-    QCLOUD_RET_SUCCESS = 0,
-    QCLOUD_ERR_INVAL = 1,
-    QCLOUD_ERR_FAILURE = 2,
-};
-
 // TODO platform dependant
 void HAL_SleepMs( unsigned int ms)
 {
-    TickType_t ticks = ms / portTICK_PERIOD_MS;
+    TickType_t ticks = ms / portTICK_PERIOD_MS * 10;
     vTaskDelay(ticks ? ticks : 1); /* Minimum delay = 1 tick */
     return;
 }

@@ -17,6 +17,13 @@ extern "C" {
 #define _OU_ /* indicate a output parameter */
 #define HAL_SEMA_WAIT_MAX_DELAY         0xFFFFFFFF
 
+enum
+{
+    QCLOUD_RET_SUCCESS = 0,
+    QCLOUD_ERR_INVAL = 1,
+    QCLOUD_ERR_FAILURE = 2,
+};
+
 typedef void (*ThreadRunFunc)(void *arg);
 
 typedef struct ThreadParams

@@ -46,10 +46,10 @@
 #define configUSE_IDLE_HOOK			0
 #define configUSE_TICK_HOOK			0
 #define configCPU_CLOCK_HZ			( ( unsigned long ) 8000000 )
-#define configTICK_RATE_HZ			( ( TickType_t ) 1000 )
+#define configTICK_RATE_HZ			( ( TickType_t ) 1000 ) //任务节拍中断频率
 #define configMAX_PRIORITIES		( 4 )
-#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 50 )
-#define configTOTAL_HEAP_SIZE		( (size_t ) ( 150 ) )
+#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 35 )
+#define configTOTAL_HEAP_SIZE		( (size_t ) ( 2048 ) )
 #define configMAX_TASK_NAME_LEN		( 8 )
 #define configUSE_16_BIT_TICKS		1
 #define configIDLE_SHOULD_YIELD		1
@@ -78,6 +78,7 @@ to exclude the API function. */
 #define configTIMER_TASK_STACK_DEPTH     50
 */
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
+//#define configSUPPORT_STATIC_ALLOCATION  1
 #define portUSE_TIMER0                  
 #define MULTITHREAD_ENABLED
 #define configUSE_MUTEXES                1 //使用互斥信号量

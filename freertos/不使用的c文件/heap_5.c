@@ -139,8 +139,8 @@ void * pvPortMalloc( size_t xWantedSize )
 
     /* The heap must be initialised before the first call to
      * prvPortMalloc(). */
+    printf("pvPortMalloc first xWantedSize[%d]", xWantedSize);
     configASSERT( pxEnd );
-
     vTaskSuspendAll();
     {
         /* Check the requested block size is not so large that the top bit is
@@ -179,6 +179,8 @@ void * pvPortMalloc( size_t xWantedSize )
             {
                 xWantedSize = 0;
             }
+
+            printf("pvPortMalloc xWantedSize[%d] xFreeBytesRemaining[%d]", xWantedSize, xFreeBytesRemaining);
 
             if( ( xWantedSize > 0 ) && ( xWantedSize <= xFreeBytesRemaining ) )
             {

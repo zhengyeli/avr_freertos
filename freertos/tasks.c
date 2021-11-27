@@ -763,7 +763,7 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
         #else /* portSTACK_GROWTH */
             {
                 StackType_t * pxStack;
-
+                
                 /* Allocate space for the stack used by the task being created. */
                 pxStack = pvPortMallocStack( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ) ); /*lint !e9079 All values returned by pvPortMalloc() have at least the alignment required by the MCU's stack and this allocation is the stack. */
 
@@ -787,7 +787,10 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
                 else
                 {
                     pxNewTCB = NULL;
-                }
+                }       
+            usart_transmit_str("----------------------------------\n");
+            printf("task[%s] malloc\n", pcName);                
+            printf("first xWantedSize[%d] result:[%d]\n\n", (usStackDepth * sizeof( StackType_t )),  (pxStack != NULL ? 1 : 0));      
             }
         #endif /* portSTACK_GROWTH */
 
@@ -809,7 +812,9 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
         {
             xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
         }
-
+            printf("second xWantedSize[%d] result:[%d]\n\n", sizeof( TCB_t ), (pxNewTCB != NULL ? 1 : 0));
+            printf("create is [%d]\n\n", xReturn);
+            usart_transmit_str("----------------------------------\n");
         return xReturn;
     }
 
@@ -2048,7 +2053,6 @@ void vTaskStartScheduler( void )
             }
         }
     #endif /* configUSE_TIMERS */
-
     if( xReturn == pdPASS )
     {
         /* freertos_tasks_c_additions_init() should only be called if the user
@@ -2076,7 +2080,6 @@ void vTaskStartScheduler( void )
                 _impure_ptr = &( pxCurrentTCB->xNewLib_reent );
             }
         #endif /* configUSE_NEWLIB_REENTRANT */
-
         xNextTaskUnblockTime = portMAX_DELAY;
         xSchedulerRunning = pdTRUE;
         xTickCount = ( TickType_t ) configINITIAL_TICK_COUNT;
@@ -2090,19 +2093,17 @@ void vTaskStartScheduler( void )
         portCONFIGURE_TIMER_FOR_RUN_TIME_STATS();
 
         traceTASK_SWITCHED_IN();
-
+        //usart_transmit_str("Scheduler pdPASS\n");
         /* Setting up the timer tick is hardware specific and thus in the
          * portable interface. */
         if( xPortStartScheduler() != pdFALSE )
         {
             /* Should not reach here as if the scheduler is running the
              * function will not return. */
-            usart_transmit_str("xPortStartScheduler_creat_success\n\r");
         }
         else
         {
             /* Should only reach here if a task calls xTaskEndScheduler(). */
-            usart_transmit_str("xPortStartScheduler_EndScheduler\n\r");
         }
     }
     else
@@ -3059,7 +3060,6 @@ void vTaskSwitchContext( void )
                 ulTaskSwitchedInTime = ulTotalRunTime;
             }
         #endif /* configGENERATE_RUN_TIME_STATS */
-
         /* Check for stack overflow, if configured. */
         taskCHECK_FOR_STACK_OVERFLOW();
 
@@ -3441,7 +3441,7 @@ void vTaskMissedYield( void )
  */
 static portTASK_FUNCTION( prvIdleTask, pvParameters )
 {
-
+    usart_transmit_str("idle\n");
     /* Stop warnings. */
     ( void ) pvParameters;
     /** THIS IS THE RTOS IDLE TASK - WHICH IS CREATED AUTOMATICALLY WHEN THE
@@ -3451,13 +3451,11 @@ static portTASK_FUNCTION( prvIdleTask, pvParameters )
      * the idle task is responsible for deleting the task's secure context, if
      * any. */
     portALLOCATE_SECURE_CONTEXT( configMINIMAL_SECURE_STACK_SIZE );
-    usart_transmit_str("This-is-prvIdleTask\n\r");
     for( ; ; )
     {
         /* See if any tasks have deleted themselves - if so then the idle task
          * is responsible for freeing the deleted task's TCB and stack. */
         prvCheckTasksWaitingTermination();
-
         #if ( configUSE_PREEMPTION == 0 )
             {
                 /* If we are not using preemption we keep forcing a task switch to
@@ -3502,7 +3500,6 @@ static portTASK_FUNCTION( prvIdleTask, pvParameters )
                 vApplicationIdleHook();
             }
         #endif /* configUSE_IDLE_HOOK */
-
         /* This conditional compilation should use inequality to 0, not equality
          * to 1.  This is to ensure portSUPPRESS_TICKS_AND_SLEEP() is called when
          * user defined low power mode  implementations require
