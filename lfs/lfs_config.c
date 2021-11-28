@@ -1,9 +1,9 @@
-#include "lfs.h"
+//#include "lfs.h"
 #include "lfs_config.h"
-#include <AVRdef.h>
+//#include <AVRdef.h>
 #include "app.h"
 
-#define ADDRESS 0x001D1000
+#define ADDRESS 0x00
 
 
 int lfs_flash_init()
@@ -82,16 +82,15 @@ void Govee_littleFs_init(void)
         lfs_mount(&lfs, &cfg);
     }
 
-
+lfs_file_t file;
 // 例子
-/*     // read current count
+    // read current count
     uint32_t boot_count = 0;
     lfs_file_open(&lfs, &file, "s_user_config", LFS_O_RDWR | LFS_O_CREAT);
-    lfs_file_read(&lfs, &file, &s_user_config, sizeof(boot_count));
+    lfs_file_read(&lfs, &file, &boot_count, sizeof(boot_count));
     // update boot count
     boot_count += 1;
 
-    HAL_SleepMs(1000);
     lfs_file_rewind(&lfs, &file);
     lfs_file_write(&lfs, &file, &boot_count, sizeof(boot_count));
 
@@ -101,8 +100,8 @@ void Govee_littleFs_init(void)
     // release any resources we were using
     lfs_unmount(&lfs);
 
-    // print the boot count
-    printf("boot_count: %d\n", boot_count); */
+    // print the boot coun
+    printf("boot_count: %d\n", boot_count); 
 
 }
 

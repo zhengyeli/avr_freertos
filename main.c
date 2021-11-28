@@ -6,14 +6,13 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "HAL_Os.h"
-#include <stdio.h>
 
 uint8_t * buffer = NULL;
 
 void port_init(void)
 {
-  PORTA = 0x00;
-  DDRA = 0x00;
+  PORTA = 0xaa;
+  DDRA = 0xaa;
   PORTB = 0x00;
   DDRB = 0x00;
   PORTC = 0x00; //m103 output only
@@ -117,14 +116,14 @@ void vPortDefineHeapRegionsInit()
 
 int main()
 {
-  //buffer = (char *)malloc(150);
+
   char ret = 0;
   init_devices();
   buffer = (uint8_t *)malloc(150);
-  vPortDefineHeapRegionsInit();
+
 
 #ifdef use_freertos
-
+  vPortDefineHeapRegionsInit();
   ThreadParams ThreadParam;
 /*
   ThreadParam.thread_name = "task1";
@@ -166,7 +165,6 @@ int main()
 #endif
   //主程序不能结束，否则定时器停止，外部中断也是
   //main fuction caan not stop , or the system will stop
-  //usart_transmit_str("33333333333333");
   while (1)
   {
     usart_transmit_str("freertos start fail,i am [false]\n");

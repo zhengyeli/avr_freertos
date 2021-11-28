@@ -1,7 +1,7 @@
 #ifndef APP_H
 #define APP_H
 
-#include "iom16v.h"
+//#include "iom16v.h"
 #include <macros.h>
 
 #include <avr/io.h>
@@ -15,7 +15,9 @@
 #define  uint8 unsigned char
 #define  uint16  unsigned int
 #define  use_freertos 
-#define  use_heap5 1
+#ifdef  use_freertos 
+  #define  use_heap5 1
+#endif
 
 extern int valid_num;
 extern int shownum[]; 

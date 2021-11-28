@@ -19,6 +19,12 @@
 #include LFS_STRINGIZE(LFS_CONFIG)
 #else
 
+//不输出
+#define LFS_NO_DEBUG
+#define LFS_NO_WARN
+#define LFS_NO_ERROR
+#define LFS_NO_ASSERT
+
 // System includes
 #include <stdint.h>
 #include <stdbool.h>

@@ -19,6 +19,9 @@
         "stddef.h": "c",
         "STDDEF.H": "cpp",
         "STDARG.H": "cpp",
-        "STDLIB.H": "cpp"
+        "STDLIB.H": "cpp",
+        "lfs_config.h": "c",
+        "lfs_util.h": "c",
+        "stdbool.h": "c"
     }
 }

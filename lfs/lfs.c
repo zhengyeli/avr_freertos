@@ -4,7 +4,7 @@
  * Copyright (c) 2017, Arm Limited. All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "lfs.h"
+#include "lfs_config.h"
 #include "lfs_util.h"
 
 #define LFS_BLOCK_NULL ((lfs_block_t)-1)
